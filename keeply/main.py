@@ -2,7 +2,7 @@ from keeply.models_contacts import AddressBook, Record
 from keeply.models_notes import NoteBook, Note
 from keeply.storage import save_data, load_data
 from keeply.utils import input_error, get_closest_match
-from tables import format_contacts_table, format_notes_table
+from keeply.tables import format_contacts_table, format_notes_table
 CONTACTS_FILE = "contacts.pkl"
 NOTES_FILE = "notes.pkl"
 

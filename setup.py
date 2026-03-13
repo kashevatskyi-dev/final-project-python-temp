@@ -6,6 +6,10 @@ setup(
     description='Personal Assistant CLI App for managing contacts and notes.',
     author='Group-5',
     packages=find_packages(),
+		install_requires=[
+        'tabulate',
+        'colorama'
+    ],
     entry_points={
         'console_scripts': [
             # Цей рядок означає: при введенні команди keeply в терміналі, 
