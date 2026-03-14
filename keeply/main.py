@@ -68,7 +68,7 @@ def show_all_contacts(args, book: AddressBook):
             raise ValueError("Enter page number (e.g., all 2).")
         page = int(args[0])
 
-    return format_contacts_table(book, page=page, page_size=3)
+    return format_contacts_table(book, page=page, page_size=5)
 
 @input_error
 def add_email(args, book: AddressBook):
@@ -160,11 +160,19 @@ def add_note(args, notebook: NoteBook):
     return f"✅ Нотатку '{title}' успішно додано!"
 
 @input_error
-def show_all_notes(notebook: NoteBook):
+def show_all_notes(args, notebook: NoteBook):
     if not notebook.data:
         return "📭 Зошит з нотатками порожній."
     #return "\n".join(str(note) for note in notebook.data.values())
-    return format_notes_table(notebook)
+    page = 1
+    if args:
+        # all 2
+        if len(args) != 1:
+            raise ValueError("Usage: all [page]")
+        if not args[0].isdigit():
+            raise ValueError("Enter page number (e.g., all 2).")
+        page = int(args[0])
+    return format_notes_table(notebook, page=page, page_size=5)
 
 @input_error
 def search_note(args, notebook: NoteBook):
@@ -285,7 +293,7 @@ def main():
         elif command == "add-note":
             print(add_note(args, notes_book))
         elif command == "all-notes":
-            print(show_all_notes(notes_book))
+            print(show_all_notes(args, notes_book))
         elif command == "search-note":
             print(search_note(args, notes_book))
         elif command == "search-tag":

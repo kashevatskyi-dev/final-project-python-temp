@@ -70,6 +70,7 @@ def format_contacts_table(book, page: int = 1, page_size: int = 10) -> str:
             f"{Style.BRIGHT}Address{Style.RESET_ALL}",
         ],
         tablefmt="fancy_grid",
+        disable_numparse=True
     )
 
     footer = (
