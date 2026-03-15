@@ -11,7 +11,10 @@ def format_contacts_table(book, page: int = 1, page_size: int = 10) -> str:
     - record.email (Field або None)
     - record.address (Field або None)
     """
-    records = list(book.data.values())
+    if isinstance(book, list):
+        records = book
+    else:
+        records = list(book.data.values())
     if not records:
         return "No contacts saved."
 
@@ -75,17 +78,18 @@ def format_contacts_table(book, page: int = 1, page_size: int = 10) -> str:
 
     footer = (
         f"\n{Style.DIM}Page {page}/{total_pages} | "
-        f"Total contacts: {total} | "
-        f"Use: all <page>{Style.RESET_ALL}"
+        f"Total contacts: {total}"
     )
     return table + footer
 
-def format_notes_table(notes_dict: dict, page: int = 1, page_size: int = 10, text_limit: int = 60) -> str:
-    if not notes_dict:
+def format_notes_table(notes, page: int = 1, page_size: int = 10, text_limit: int = 60) -> str:
+    if not notes:
         return "No notes saved."
-
-    items = list(notes_dict.items())
-    items.sort(key=lambda x: str(x[0]).lower())
+    if isinstance(notes, list):
+        items = [(note.title, note) for note in notes]
+    else:
+        items = list(notes.items())
+        items.sort(key=lambda x: str(x[0]).lower())
 
     total = len(items)
     total_pages = max(1, math.ceil(total / page_size))
@@ -135,16 +139,15 @@ def format_notes_table(notes_dict: dict, page: int = 1, page_size: int = 10, tex
     table = tabulate(
         rows,
         headers=[
-            f"{Style.BRIGHT}Назва нотатки{Style.RESET_ALL}",
-            f"{Style.BRIGHT}Текст нотатки{Style.RESET_ALL}",
-            f"{Style.BRIGHT}Теги{Style.RESET_ALL}",
+            f"{Style.BRIGHT}Title{Style.RESET_ALL}",
+            f"{Style.BRIGHT}Text{Style.RESET_ALL}",
+            f"{Style.BRIGHT}Tags{Style.RESET_ALL}",
         ],
         tablefmt="fancy_grid",
     )
 
     footer = (
         f"\n{Style.DIM}Page {page}/{total_pages} | "
-        f"Total notes: {total} | "
-        f"Use: notes <page>{Style.RESET_ALL}"
+        f"Total notes: {total}"
     )
     return table + footer

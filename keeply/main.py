@@ -134,7 +134,8 @@ def search_contact(args, book: AddressBook):
     
     if not results:
         return f"🔍 Контактів за запитом '{query}' не знайдено."
-    return "\n".join(str(r) for r in results)
+    #return "\n".join(str(r) for r in results)
+    return format_contacts_table(results)
 
 @input_error
 def delete_contact(args, book: AddressBook):
@@ -180,7 +181,8 @@ def search_note(args, notebook: NoteBook):
     results = notebook.search_by_text(query)
     if not results:
         return f"🔍 Нотаток за запитом '{query}' не знайдено."
-    return "\n".join(str(note) for note in results)
+    #return "\n".join(str(note) for note in results)
+    return format_notes_table(results)
 
 @input_error
 def search_by_tag(args, notebook: NoteBook):
@@ -188,14 +190,16 @@ def search_by_tag(args, notebook: NoteBook):
     results = notebook.search_by_tag(tag)
     if not results:
         return f"🔍 Нотаток з тегом #{tag} не знайдено."
-    return "\n".join(str(note) for note in results)
+    #return "\n".join(str(note) for note in results)
+    return format_notes_table(results)
 
 @input_error
 def sort_notes_by_tags(notebook: NoteBook):
     sorted_notes = notebook.sort_by_tags()
     if not sorted_notes:
         return "📭 Список нотаток порожній."
-    return "\n".join(str(note) for note in sorted_notes)
+    #return "\n".join(str(note) for note in sorted_notes)
+    return format_notes_table(sorted_notes)
 
 @input_error
 def edit_note(args, notebook: NoteBook):
